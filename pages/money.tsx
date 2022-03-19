@@ -43,7 +43,7 @@ const Money: NextPage = () => {
 
         <div className="flex">
           <div className="card w-[650px] min-h-fit m-3 p-10 bg-slate-100">
-            <p className="text-center text-admin-blue"> Mint for Address</p>
+            <p className="text-center text-admin-blue"> Update Mint Price</p>
             <form onSubmit={setMintPrice}>
               <div className="flex items-center justify-center py-2 bg-slate-100">
                 <input

@@ -58,14 +58,6 @@ const Dashboard: NextPage = () => {
             </div>
           </div>
 
-          <div className="card w-[450px] min-h-fit m-3 p-10 bg-slate-100">
-            <p className="text-center text-admin-blue">Whitelist Status</p>
-            <div className="flex flex-col items-center justify-center py-2">
-              <div className="px-4 py-2 rounded-md bg-admin-blue text-xl font-semibold duration-100 text-white">
-                <p>{whitelistMintEnabled}</p>
-              </div>
-            </div>
-          </div>
 
           <div className="card w-[450px] min-h-fit m-3 p-10 bg-slate-100">
             <p className="text-center text-admin-blue">Total Supply</p>
@@ -93,14 +85,6 @@ const Dashboard: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="card w-[450px] min-h-fit m-3 p-10 bg-slate-100">
-            <p className="text-center text-admin-blue">Revealed Status</p>
-            <div className="flex flex-col items-center justify-center py-2">
-              <div className="px-4 py-2 rounded-md bg-admin-blue text-xl font-semibold duration-100 text-white">
-                <p>{revealed}</p>
-              </div>
-            </div>
-          </div>{" "}
           <div className="card w-[450px] min-h-fit m-3 p-10 bg-slate-100">
             <p className="text-center text-admin-blue">Max Supply</p>
             <div className="flex flex-col items-center justify-center py-2">

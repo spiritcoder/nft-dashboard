@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { BaseLayout } from "../components/sharedLayout/BaseLayout";
 import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
-import { NFT_ABI, NFT_CONTRACT_ADDRESS } from "../assets/config";
+import { NFT_ABI, NFT_CONTRACT_ADDRESS, PRE_SALE_COST, PUBLIC_SALE_COST } from "../assets/config";
 
 const Settings: NextPage = () => {
   const { active, library: provider } = useWeb3React();
@@ -57,13 +57,20 @@ const Settings: NextPage = () => {
     }
   }
 
-  async function salesControl(event: any) {
-    event.preventDefault();
-    let boolValue = `${event.target.sales.value}`;
-    var val = boolValue === "true";
+  async function setPresale() {
     const signer = provider.getSigner();
     const contract = new ethers.Contract(NFT_CONTRACT_ADDRESS, NFT_ABI, signer);
-    await contract.setPaused(val);
+    let costWei = ethers.utils.parseEther(PRE_SALE_COST.toString());
+    await contract.setCost(costWei);
+    await contract.setPaused(false);
+  }
+
+  async function setPublicSale() {
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(NFT_CONTRACT_ADDRESS, NFT_ABI, signer);
+    let costWei = ethers.utils.parseEther(PUBLIC_SALE_COST.toString());
+    await contract.setCost(costWei);
+    await contract.setPaused(false);
   }
 
   async function revealControl(event: any) {
@@ -129,17 +136,16 @@ const Settings: NextPage = () => {
               </div>
             </form>
           </div>
-
-          <div className="card w-[450px] min-h-fit m-3 p-10 bg-slate-100">
-            <p className="text-center text-admin-blue">Sales Control</p>
-            <form onSubmit={salesControl}>
+          <div className="card w-[650px] min-h-fit m-3 p-10 bg-slate-100">
+            <p className="text-center text-admin-blue">Reveal Control</p>
+            <form onSubmit={revealControl}>
               <div className="flex items-center justify-center py-2 bg-slate-100">
                 <select
                   className="form-select w-96 px-3 py-1.5 font-normal border border-solid"
                   name="sales"
                 >
-                  <option value="true">Disable</option>
-                  <option value="false">Enable</option>
+                  <option value="true">Reveal</option>
+                  <option value="false">Hide</option>
                 </select>
               </div>
               <div className="flex flex-col items-center justify-center py-2">
@@ -154,31 +160,32 @@ const Settings: NextPage = () => {
           </div>
         </div>
         <div className="flex">
+         
           <div className="card w-[650px] min-h-fit m-3 p-10 bg-slate-100">
-            <p className="text-center text-admin-blue">Reveal Control</p>
-            <form onSubmit={revealControl}>
-              <div className="flex items-center justify-center py-2 bg-slate-100">
-                <select
-                  className="form-select w-96 px-3 py-1.5 font-normal border border-solid"
-                  name="sales"
-                >
-                  <option value="true">Enable</option>
-                  <option value="false">Disable</option>
-                </select>
-              </div>
+            <p className="text-center text-admin-blue">Enable Presale</p>
               <div className="flex flex-col items-center justify-center py-2">
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-md bg-admin-blue cursor-pointer hover:bg-admin-blue text-xl font-semibold duration-100 text-white"
+                  className="px-4 py-2 rounded-md bg-admin-blue cursor-pointer hover:bg-admin-blue text-xl font-semibold duration-100 text-white" onClick={() => setPresale()}
                 >
-                  Update
+                  Enable
                 </button>
               </div>
-            </form>
+          </div>
+          <div className="card w-[650px] min-h-fit m-3 p-10 bg-slate-100">
+            <p className="text-center text-admin-blue">Enable Public Sale</p>
+              <div className="flex flex-col items-center justify-center py-2">
+                <button
+                  type="submit"
+                  className="px-4 py-2 rounded-md bg-admin-blue cursor-pointer hover:bg-admin-blue text-xl font-semibold duration-100 text-white" onClick={() => setPublicSale()}
+                >
+                  Enable
+                </button>
+              </div>
           </div>
 
           <div className="card w-[650px] min-h-fit m-3 p-10 bg-slate-100">
-            <p className="text-center text-admin-blue"> Mint for Address</p>
+            <p className="text-center text-admin-blue"> Set Mint Max</p>
             <form onSubmit={updateAmount}>
               <div className="flex items-center justify-center py-2 bg-slate-100">
                 <input
