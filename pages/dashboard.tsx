@@ -11,7 +11,6 @@ const Dashboard: NextPage = () => {
   const [owner, setowner] = useState<string>("");
   const [paused, setpaused] = useState<string>("");
   const [revealed, setrevealed] = useState<string>("");
-  const [whitelistMintEnabled, setwhitelistMintEnabled] = useState<string>("");
   const [totalSupply, settotalSupply] = useState<string>("");
   const [maxMintAmountPerTx, setmaxMintAmountPerTx] = useState<string>("");
   const [cost, setcost] = useState<number>(0);
@@ -33,9 +32,6 @@ const Dashboard: NextPage = () => {
         setowner((await contract.owner()).toString());
         setpaused((await contract.paused()).toString());
         setrevealed((await contract.revealed()).toString());
-        setwhitelistMintEnabled(
-          (await contract.whitelistMintEnabled()).toString()
-        );
         settotalSupply((await contract.totalSupply()).toString());
         setcost((await contract.cost()).toString());
         setmaxMintAmountPerTx((await contract.maxMintAmountPerTx()).toString());
