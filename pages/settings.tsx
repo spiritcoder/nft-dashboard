@@ -73,6 +73,12 @@ const Settings: NextPage = () => {
     await contract.setPaused(false);
   }
 
+  async function pauseContract() {
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(NFT_CONTRACT_ADDRESS, NFT_ABI, signer);
+    await contract.setPaused(true);
+  }
+
   async function revealControl(event: any) {
     event.preventDefault();
     let boolValue = `${event.target.sales.value}`;
@@ -206,8 +212,25 @@ const Settings: NextPage = () => {
             </form>
           </div>
         </div>
+
+        <div className="flex">
+         
+          <div className="card w-[650px] min-h-fit m-3 p-10 bg-slate-100">
+            <p className="text-center text-admin-blue">Pause Minting</p>
+              <div className="flex flex-col items-center justify-center py-2">
+                <button
+                  type="submit"
+                  className="px-4 py-2 rounded-md bg-admin-blue cursor-pointer hover:bg-admin-blue text-xl font-semibold duration-100 text-white" onClick={() => pauseContract()}
+                >
+                  Pause Mint
+                </button>
+              </div>
+          </div>
+        </div>
       </BaseLayout>
     </div>
+
+
   );
 };
 
